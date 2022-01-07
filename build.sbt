@@ -28,7 +28,9 @@ lazy val root =
           "com.github.nscala-time" %% "nscala-time" % "2.30.0",
           "com.typesafe.play" %% "play-json" % "2.9.2",
           "com.typesafe.play" %% "play-json-joda" % "2.9.2",
-          "com.freelance-stats" %% "s3-client" % "0.0.3"
+          "com.freelance-stats" %% "s3-client" % "0.0.3",
+          "com.google.inject" % "guice" % "5.0.1",
+          "com.typesafe" % "config" % "1.4.1",
         )
       ) ++ sharedSettings ++ githubPackagesConfig: _*
     )
