@@ -7,7 +7,7 @@ import akka.actor.typed.{ActorRef, Behavior, SupervisorStrategy}
 import akka.actor.typed.scaladsl.adapter._
 import akka.actor.typed.scaladsl.AskPattern._
 import akka.pattern.StatusReply
-import akka.stream.javadsl.RunnableGraph
+import akka.stream.scaladsl.RunnableGraph
 import akka.stream.{KillSwitch, Materializer}
 import com.freelanceStats.commons.streamMaintainer.StreamMaintainer.Actor
 
@@ -73,7 +73,7 @@ object StreamMaintainer {
       Behaviors.receiveMessagePartial {
         case Start(replyTo) =>
           context.log.info("Starting the stream")
-          val (killSwitch, completionF) = runnableGraph.run(materializer)
+          val (killSwitch, completionF) = runnableGraph.run()
           context.pipeToSelf(completionF) {
             case Failure(exception) =>
               HandleError(exception)
@@ -84,7 +84,7 @@ object StreamMaintainer {
           running(runnableGraph, killSwitch)
         case Restart =>
           context.log.info("Restarting the stream")
-          val (killSwitch, completionF) = runnableGraph.run(materializer)
+          val (killSwitch, completionF) = runnableGraph.run()
           context.pipeToSelf(completionF) {
             case Failure(exception) =>
               HandleError(exception)
