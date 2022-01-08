@@ -1,14 +1,17 @@
 package com.freelanceStats.commons.modules
 
 import akka.actor.ActorSystem
-import com.google.inject.AbstractModule
+import com.google.inject.{AbstractModule, Provides}
 import com.typesafe.config.ConfigFactory
 import org.slf4j.LoggerFactory
 
+import javax.inject.Singleton
 import scala.util.Try
 
 class ActorSystemModule extends AbstractModule {
-  override def configure(): Unit = {
+  @Provides
+  @Singleton
+  def provideActorSystem(): ActorSystem = {
     val log = LoggerFactory.getLogger(classOf[ActorSystemModule])
     val conf = ConfigFactory.load()
     val name = Try(conf.getString("application.actorSystem.name"))
@@ -19,12 +22,10 @@ class ActorSystemModule extends AbstractModule {
     log.debug(
       s"Loading ${getClass.getName}, 'application.actorSystem' picked up ${actorSystemConfig.isDefined}"
     )
-    bind(classOf[ActorSystem]).toInstance(
-      actorSystemConfig.fold(
-        ActorSystem.create(name)
-      )(
-        ActorSystem.create(name, _)
-      )
+    actorSystemConfig.fold(
+      ActorSystem.create(name)
+    )(
+      ActorSystem.create(name, _)
     )
   }
 }
