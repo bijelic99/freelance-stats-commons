@@ -19,6 +19,8 @@ case class UnsavedRawJob(
     source: String,
     created: DateTime,
     modified: DateTime,
+    contentType: String,
+    contentSize: Long,
     data: Source[ByteString, _]
 ) extends Job
 
