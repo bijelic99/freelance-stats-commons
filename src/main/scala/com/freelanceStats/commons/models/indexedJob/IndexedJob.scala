@@ -12,6 +12,7 @@ case class IndexedJob(
     fileReference: FileReference,
     title: String,
     description: String,
+    valid: Boolean,
     categories: Seq[Category],
     payment: Payment,
     language: Option[Language],
