@@ -1,6 +1,6 @@
 package com.freelanceStats.commons.models.indexedJob
 
 case class Location(
-    country: Option[Country],
+    country: Country,
     city: Option[City]
 )
