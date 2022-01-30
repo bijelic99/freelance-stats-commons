@@ -31,7 +31,7 @@ lazy val root =
           "com.freelance-stats" %% "s3-client" % "0.0.3",
           "com.google.inject" % "guice" % "5.0.1",
           "com.typesafe" % "config" % "1.4.1",
-          "ch.qos.logback" % "logback-classic" % "1.2.10",
+          "ch.qos.logback" % "logback-classic" % "1.2.10"
         )
       ) ++ sharedSettings ++ githubPackagesConfig: _*
     )
