@@ -17,13 +17,14 @@ import scala.util.{Failure, Success}
 
 trait StreamMaintainer {
   def system: ActorSystem
+  def configuration: StreamMaintainerConfiguration
   implicit val materializer: Materializer
   implicit val executionContext: ExecutionContext
   implicit val timeout: FiniteDuration
 
   def runnableGraph: RunnableGraph[(KillSwitch, Future[Done])]
   def actorRef: ActorRef[Actor.Command] = system.spawn(
-    StreamMaintainer.Actor(runnableGraph),
+    StreamMaintainer.Actor(runnableGraph, configuration),
     "stream-maintainer-manager"
   )
 
@@ -58,12 +59,19 @@ object StreamMaintainer {
   object Actor {
 
     def apply(
-        runnableGraph: RunnableGraph[(KillSwitch, Future[Done])]
+        runnableGraph: RunnableGraph[(KillSwitch, Future[Done])],
+        configuration: StreamMaintainerConfiguration
     )(implicit
         materializer: Materializer
     ): Behavior[Command] = Behaviors
       .supervise(stopped(runnableGraph))
-      .onFailure(SupervisorStrategy.restart)
+      .onFailure(
+        SupervisorStrategy.restartWithBackoff(
+          configuration.minBackoff,
+          configuration.maxBackoff,
+          configuration.randomFactor
+        )
+      )
 
     private def stopped(
         runnableGraph: RunnableGraph[(KillSwitch, Future[Done])]
