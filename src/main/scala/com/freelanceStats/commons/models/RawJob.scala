@@ -26,13 +26,14 @@ object RawJob {
         modified: DateTime,
         title: String,
         description: String,
-        valid: Boolean,
         categories: Seq[Category],
         payment: Payment,
         language: Option[Language],
         positionType: Option[PositionType],
         location: Option[Location],
-        employer: Option[Employer]
+        employer: Option[Employer],
+        valid: Boolean,
+        deleted: Boolean
     ): IndexedJob =
       IndexedJob(
         id,
@@ -43,13 +44,14 @@ object RawJob {
         rawJob.fileReference,
         title,
         description,
-        valid,
         categories,
         payment,
         language,
         positionType,
         location,
-        employer
+        employer,
+        valid,
+        deleted
       )
   }
 }
