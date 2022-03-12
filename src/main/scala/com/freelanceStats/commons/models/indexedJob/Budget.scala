@@ -5,5 +5,5 @@ case class Budget(
     maximumUsd: Double,
     minimum: Double,
     maximum: Double,
-    currency: Currency
+    currency: Option[Currency]
 )
