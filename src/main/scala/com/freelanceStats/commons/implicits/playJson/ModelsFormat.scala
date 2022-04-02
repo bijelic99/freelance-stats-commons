@@ -27,7 +27,9 @@ import play.api.libs.json.{
   JsString,
   JsSuccess,
   JsValue,
-  Json
+  Json,
+  Reads,
+  Writes
 }
 
 import scala.concurrent.duration.{Duration, FiniteDuration}
@@ -65,11 +67,17 @@ object ModelsFormat {
   implicit val hourlyFormat: Format[Hourly] = Json.format[Hourly]
   implicit val fixedPriceFormat: Format[FixedPrice] = Json.format[FixedPrice]
   implicit val paymentFormat: Format[Payment] = Json.format[Payment]
-  implicit val inPersonFormat: Format[InPerson.type] =
-    Json.format[InPerson.type]
-  implicit val remoteFormat: Format[Remote.type] = Json.format[Remote.type]
-  implicit val positionTypeFormat: Format[PositionType] =
-    Json.format[PositionType]
+  implicit val positionTypeFormat: Format[PositionType] = Format(
+    fjs = Reads {
+      case JsString("InPerson") => JsSuccess(InPerson)
+      case JsString("Remote")   => JsSuccess(Remote)
+      case _                    => JsError("Unknown position type")
+    },
+    tjs = Writes {
+      case InPerson => JsString("InPerson")
+      case Remote   => JsString("Remote")
+    }
+  )
   implicit val timezoneFormat: Format[Timezone] = Json.format[Timezone]
   implicit val employerFormat: Format[Employer] = Json.format[Employer]
   implicit val indexedJobFormat: Format[IndexedJob] = Json.format[IndexedJob]
