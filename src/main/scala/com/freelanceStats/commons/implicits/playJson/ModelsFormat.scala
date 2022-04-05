@@ -1,36 +1,9 @@
 package com.freelanceStats.commons.implicits.playJson
 
 import com.freelanceStats.commons.models.RawJob
-import com.freelanceStats.commons.models.indexedJob.{
-  Budget,
-  Category,
-  City,
-  Country,
-  Currency,
-  Employer,
-  FixedPrice,
-  Hourly,
-  InPerson,
-  IndexedJob,
-  Language,
-  Location,
-  Payment,
-  PositionType,
-  Remote,
-  Timezone
-}
+import com.freelanceStats.commons.models.indexedJob._
 import com.freelanceStats.s3Client.models.FileReference
-import play.api.libs.json.{
-  Format,
-  JsError,
-  JsResult,
-  JsString,
-  JsSuccess,
-  JsValue,
-  Json,
-  Reads,
-  Writes
-}
+import play.api.libs.json._
 
 import scala.concurrent.duration.{Duration, FiniteDuration}
 
@@ -51,7 +24,7 @@ object ModelsFormat {
         }
 
       override def writes(o: FiniteDuration): JsValue =
-        JsString(FiniteDuration.toString)
+        JsString(o.toString())
     }
 
   implicit val fileReferenceFormat: Format[FileReference] =
