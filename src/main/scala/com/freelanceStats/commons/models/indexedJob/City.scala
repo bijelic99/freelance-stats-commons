@@ -2,5 +2,7 @@ package com.freelanceStats.commons.models.indexedJob
 
 case class City(
     id: String,
-    name: String
+    name: String,
+    longitude: Option[Double],
+    latitude: Option[Double]
 ) extends ReferencedByAlias
