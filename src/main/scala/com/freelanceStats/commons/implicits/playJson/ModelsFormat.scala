@@ -33,6 +33,7 @@ object ModelsFormat {
   implicit val currencyFormat: Format[Currency] = Json.format[Currency]
   implicit val budgetFormat: Format[Budget] = Json.format[Budget]
   implicit val categoryFormat: Format[Category] = Json.format[Category]
+  implicit val coordinatesFormat: Format[Coordinates] = Json.format[Coordinates]
   implicit val cityFormat: Format[City] = Json.format[City]
   implicit val countryFormat: Format[Country] = Json.format[Country]
   implicit val locationFormat: Format[Location] = Json.format[Location]

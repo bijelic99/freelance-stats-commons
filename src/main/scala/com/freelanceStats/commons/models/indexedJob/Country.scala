@@ -11,7 +11,6 @@ case class Country(
     subregion: Option[String],
     continents: Seq[String],
     startOfWeek: String,
-    longitude: Option[Double],
-    latitude: Option[Double],
+    coordinates: Coordinates,
     timezones: Seq[String]
 ) extends ReferencedByAlias
