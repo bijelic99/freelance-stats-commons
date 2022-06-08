@@ -1,6 +1,6 @@
 package com.freelanceStats.commons.implicits.playJson
 
-import com.freelanceStats.commons.models.RawJob
+import com.freelanceStats.commons.models.{RawJob, User}
 import com.freelanceStats.commons.models.indexedJob._
 import com.freelanceStats.s3Client.models.FileReference
 import play.api.libs.json._
@@ -55,4 +55,5 @@ object ModelsFormat {
   implicit val timezoneFormat: Format[Timezone] = Json.format[Timezone]
   implicit val employerFormat: Format[Employer] = Json.format[Employer]
   implicit val indexedJobFormat: Format[IndexedJob] = Json.format[IndexedJob]
+  implicit val userFormat: Format[User] = Json.format[User]
 }
