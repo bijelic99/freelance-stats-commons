@@ -5,7 +5,7 @@ import play.api.Configuration
 
 import java.nio.file.{Files, Path}
 import javax.inject.Inject
-import scala.concurrent.duration.{DurationInt, FiniteDuration}
+import scala.concurrent.duration.FiniteDuration
 
 class JwtServiceConfiguration @Inject() (configuration: Configuration) {
   val keyFile: String = configuration
