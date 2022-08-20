@@ -20,6 +20,13 @@ val AkkaVersion = "2.6.14"
 lazy val root =
   (project in file("."))
     .settings(
+      sharedSettings ++ githubPackagesConfig: _*
+    )
+    .aggregate(commons, jwtAuth)
+
+lazy val commons =
+  (project in file("./modules/commons"))
+    .settings(
       Seq(
         name := "commons",
         libraryDependencies ++= Seq(
@@ -36,14 +43,18 @@ lazy val root =
         releaseVersionFile := file("commons-version.sbt")
       ) ++ sharedSettings ++ githubPackagesConfig: _*
     )
-    .aggregate(jwtAuth)
 
 lazy val jwtAuth =
   (project in file("./modules/jwt-auth"))
     .settings(
       Seq(
         name := "jwt-auth",
-        libraryDependencies ++= Seq(),
+        libraryDependencies ++= Seq(
+          "com.typesafe.play" %% "play" % "2.8.16",
+          "at.favre.lib" % "bcrypt" % "0.9.0",
+          "com.github.jwt-scala" %% "jwt-play-json" % "9.0.5"
+        ),
         releaseVersionFile := file("jwt-auth-version.sbt")
       ) ++ sharedSettings ++ githubPackagesConfig: _*
     )
+    .dependsOn(commons)
