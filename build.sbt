@@ -32,6 +32,18 @@ lazy val root =
           "com.google.inject" % "guice" % "5.0.1",
           "com.typesafe" % "config" % "1.4.1",
           "ch.qos.logback" % "logback-classic" % "1.2.10"
-        )
+        ),
+        releaseVersionFile := file("commons-version.sbt")
+      ) ++ sharedSettings ++ githubPackagesConfig: _*
+    )
+    .aggregate(jwtAuth)
+
+lazy val jwtAuth =
+  (project in file("./modules/jwt-auth"))
+    .settings(
+      Seq(
+        name := "jwt-auth",
+        libraryDependencies ++= Seq(),
+        releaseVersionFile := file("jwt-auth-version.sbt")
       ) ++ sharedSettings ++ githubPackagesConfig: _*
     )
