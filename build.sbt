@@ -8,21 +8,14 @@ lazy val root =
     .settings(
       GithubPackagesConfig.get ++ CommonConfig.get ++
         Seq(
-          name := "freelance-stats-commons",
-          releaseProcess := Seq(
-            releaseStepCommand(s"project commons"),
-            releaseStepCommand(releaseCommand),
-            releaseStepCommand(s"project jwtAuth"),
-            releaseStepCommand(releaseCommand)
-          )
+          name := "freelance-stats-commons"
         ): _*
     )
-    .aggregate(commons, jwtAuth)
 
 lazy val commons =
   (project in file("./modules/commons"))
     .settings(
-      GithubPackagesConfig.get ++ CommonConfig.get ++
+      GithubPackagesConfig.get ++ CommonConfig.get ++ ReleaseConfig.get ++
         Seq(
           name := "commons",
           libraryDependencies ++= Seq(
@@ -43,7 +36,7 @@ lazy val commons =
 lazy val jwtAuth =
   (project in file("./modules/jwt-auth"))
     .settings(
-      GithubPackagesConfig.get ++ CommonConfig.get ++
+      GithubPackagesConfig.get ++ CommonConfig.get ++ ReleaseConfig.get ++
         Seq(
           name := "jwt-auth",
           libraryDependencies ++= Seq(
