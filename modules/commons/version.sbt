@@ -1,1 +1,1 @@
-version := "commons-0.0.27-SNAPSHOT"
+version := "commons-0.0.27"
