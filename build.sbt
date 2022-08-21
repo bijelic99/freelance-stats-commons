@@ -8,7 +8,8 @@ lazy val root =
     .settings(
       GithubPackagesConfig.get ++ CommonConfig.get ++
         Seq(
-          name := "freelance-stats-commons"
+          name := "freelance-stats-commons",
+          releaseProcess := Seq()
         ): _*
     )
 
