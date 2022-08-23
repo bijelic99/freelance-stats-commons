@@ -1,4 +1,3 @@
-import sbtrelease.ReleasePlugin.autoImport.ReleaseKeys.releaseCommand
 import sbtrelease.ReleasePlugin.autoImport.releaseStepCommand
 
 val AkkaVersion = "2.6.14"
