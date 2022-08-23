@@ -13,32 +13,32 @@ class JwtAuthActionBuilder @Inject() (
     jwtService: JwtService,
     val parser: BodyParsers.Default
 )(implicit val executionContext: ExecutionContext)
-    extends ActionBuilder[Request, AnyContent]
-    with ActionRefiner[Request, AuthenticatedRequest] {
+    extends ActionBuilder[AuthenticatedRequest, AnyContent] {
 
   private val log: Logger = Logger(getClass)
 
-  override protected def refine[A](
-      request: Request[A]
-  ): Future[Either[Result, AuthenticatedRequest[A]]] =
+  override def invokeBlock[A](
+      request: Request[A],
+      block: AuthenticatedRequest[A] => Future[Result]
+  ): Future[Result] =
     request.headers
       .get("Authorization")
       .map { headerText =>
         val token = JwtToken.fromHeader()(headerText)
         jwtService
           .decodeToken(token)
-          .map {
+          .flatMap {
             case (user, _, true) =>
               log.trace(
                 s"User with id of: '${user.id}' authenticated successfully"
               )
-              Right(AuthenticatedRequest(user, request))
+              block(AuthenticatedRequest(user, request))
             case (user, _, false) =>
               log.warn(
                 s"User with id of: '${user.id}' tried to authenticate with invalid token"
               )
-              Left(Forbidden)
+              Future.successful(Forbidden)
           }
       }
-      .getOrElse(Future.successful(Left(Unauthorized)))
+      .getOrElse(Future.successful(Unauthorized))
 }
