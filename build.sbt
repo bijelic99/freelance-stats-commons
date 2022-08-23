@@ -45,9 +45,9 @@ lazy val jwtAuth =
           libraryDependencies ++= Seq(
             "com.typesafe.play" %% "play" % "2.8.16",
             "at.favre.lib" % "bcrypt" % "0.9.0",
-            "com.github.jwt-scala" %% "jwt-play-json" % "9.0.5"
+            "com.github.jwt-scala" %% "jwt-play-json" % "9.0.5",
+            "com.freelance-stats" %% "commons" % "commons-0.0.29"
           ),
           releaseVersionFile := file("./modules/jwt-auth/version.sbt")
         ): _*
     )
-    .dependsOn(commons)
