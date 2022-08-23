@@ -1,1 +1,1 @@
-version := "jwt-auth-0.0.9-SNAPSHOT"
+version := "jwt-auth-0.0.9"
