@@ -9,7 +9,10 @@ lazy val root =
       GithubPackagesConfig.get ++ CommonConfig.get ++
         Seq(
           name := "freelance-stats-commons",
-          releaseProcess := Seq()
+          releaseProcess := Seq(
+            releaseStepCommand("project commons; release"),
+            releaseStepCommand("project jwtAuth; release")
+          )
         ): _*
     )
 
