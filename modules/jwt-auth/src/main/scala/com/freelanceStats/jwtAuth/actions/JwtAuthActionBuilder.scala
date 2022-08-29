@@ -39,7 +39,7 @@ class JwtAuthActionBuilder @Inject() (
               )
               Future.successful(Unauthorized)
           }
-          .recover{ case t =>
+          .recover { case t =>
             log.warn("Unexpected error", t)
             Unauthorized
           }
