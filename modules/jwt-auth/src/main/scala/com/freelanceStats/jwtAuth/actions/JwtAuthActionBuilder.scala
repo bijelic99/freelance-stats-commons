@@ -3,7 +3,7 @@ package com.freelanceStats.jwtAuth.actions
 import com.freelanceStats.jwtAuth.models.{AuthenticatedRequest, JwtToken}
 import com.freelanceStats.jwtAuth.services.JwtService
 import play.api.Logger
-import play.api.mvc.Results.{Forbidden, Unauthorized}
+import play.api.mvc.Results.Unauthorized
 import play.api.mvc._
 
 import javax.inject.Inject
@@ -37,7 +37,11 @@ class JwtAuthActionBuilder @Inject() (
               log.warn(
                 s"User with id of: '${user.id}' tried to authenticate with invalid token"
               )
-              Future.successful(Forbidden)
+              Future.successful(Unauthorized)
+          }
+          .recover{ case t =>
+            log.warn("Unexpected error", t)
+            Unauthorized
           }
       }
       .getOrElse(Future.successful(Unauthorized))
